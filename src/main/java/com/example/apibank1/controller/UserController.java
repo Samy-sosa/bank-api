@@ -3,6 +3,7 @@ package com.example.apibank1.controller;
 import com.example.apibank1.dto.UserCreateDTO;
 import com.example.apibank1.dto.UserResponseDTO;
 import com.example.apibank1.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth") //  Indica a Swagger que este controller usa JWT
 public class UserController {
 
     private final UserService userService;
 
-    // POST /api/v1/users - Crear usuario
+    // POST /api/v1/users - Crear usuario (protegido)
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserCreateDTO userCreateDTO) {
         UserResponseDTO createdUser = userService.createUser(userCreateDTO);
